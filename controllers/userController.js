@@ -37,7 +37,7 @@ export  const login = async (req,res) => {
             return res.json({success:false,message:'Email and password are required'});
         const user = await User.findOne({email});
         if(!user){
-           return res.json({success: false,message:'Email and password are required'});
+           return res.json({success: false,message:'Invalid email or password'});
         }
         const isMatch = await bcrypt.compare(password, user.password)
         if(!isMatch)
@@ -47,7 +47,7 @@ export  const login = async (req,res) => {
                 httpOnly:true,
                 secure:process.env.NODE_ENV === 'production',
                 sameSite:process.env.NODE_ENV === 'production' ? 'none' : 'strict',
-                maxAge: 7 * 24 * 60 * 60 * 100
+                maxAge: 7 * 24 * 60 * 60 * 100,
              })
              return res.json({success:true, user: {email:user.email, name:user.name}})
          
@@ -86,3 +86,5 @@ export const logout  = async (req,res) => {
          res.json({success:false,message:error.message});
     }
 }
+
+
