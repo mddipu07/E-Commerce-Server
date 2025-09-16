@@ -16,8 +16,8 @@ import { stripeWebhooks } from './controllers/orderController.js';
 const app = express();
 const port = process.env.PORT || 4000;
 
-// Allow multiple origins
-const allowdOrigins = ['http://localhost:5173','https://e-commerce-server-gray-eta.vercel.app']
+// allow multiple origin here
+const allowdOrigins = ['http://localhost:5173','https://e-commerce-server-ten-iota.vercel.app']
 
 app.post('/stripe',express.raw({type: 'application/json'}), stripeWebhooks)
 
@@ -27,7 +27,7 @@ app.use(cors({origin: allowdOrigins, credentials: true}));
 app.use(cookieParser());
 app.use(express.json());
 
-
+// connect Database
 await connectDB()
 await connectCloudinary()
 
