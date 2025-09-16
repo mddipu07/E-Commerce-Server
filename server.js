@@ -17,7 +17,7 @@ const app = express();
 const port = process.env.PORT || 4000;
 
 // Allow multiple origins
-const allowdOrigins = ['http://localhost:5173','https://e-commerce-client-pied-nine.vercel.app']
+const allowdOrigins = ['http://localhost:5173','https://e-commerce-server-gray-eta.vercel.app']
 
 app.post('/stripe',express.raw({type: 'application/json'}), stripeWebhooks)
 
