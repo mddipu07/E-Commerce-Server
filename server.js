@@ -1,6 +1,6 @@
-import cookieParser from 'cookie-parser';
 import express from 'express';
 import cors from 'cors'
+import cookieParser from 'cookie-parser';
 import connectDB from './configs/db.js';
 import 'dotenv/config';
 import userRouter from './routes/userRoute.js';
@@ -22,9 +22,11 @@ const allowdOrigins = ['http://localhost:5173','https://e-commerce-client-pied-n
 app.post('/stripe',express.raw({type: 'application/json'}), stripeWebhooks)
 
 // Middleware configuration
-app.use(express.json());
-app.use(cookieParser());
+
 app.use(cors({origin: allowdOrigins, credentials: true}));
+app.use(cookieParser());
+app.use(express.json());
+
 
 await connectDB()
 await connectCloudinary()
