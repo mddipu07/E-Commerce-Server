@@ -125,6 +125,18 @@ export const stripeWebhooks = async (req, res) => {
       await User.findByIdAndUpdate(userId, { cartItems: {} });
       break;
     }
+    case "payment_intent.payment_failed" :{
+      const paymentIntent = event.data.object;
+      const paymentIntentId = paymentIntent.id;
+
+      const sessionList = await stripeInstance.checkout.sessions.list({
+        payment_intent: paymentIntentId,
+      });
+
+      const {orderId} = sessionList.data[0].metadata;
+      await Order.findByIdAndDelete(orderId);
+      break;
+    }
     default:
       console.error(`Unhandled event type ${event.type}`);
       break;
